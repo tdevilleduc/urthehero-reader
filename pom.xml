@@ -28,6 +28,11 @@
   </dependencyManagement>
       <dependencies>
           <dependency>
+              <groupId>com.tdevilleduc.urthehero</groupId>
+              <artifactId>core</artifactId>
+              <version>1.0-SNAPSHOT</version>
+          </dependency>
+          <dependency>
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-resteasy</artifactId>
           </dependency>
@@ -44,24 +49,6 @@
           <dependency>
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-spring-web</artifactId>
-          </dependency>
-          <dependency>
-              <groupId>io.quarkus</groupId>
-              <artifactId>quarkus-spring-data-jpa</artifactId>
-          </dependency>
-          <dependency>
-              <groupId>io.quarkus</groupId>
-              <artifactId>quarkus-hibernate-orm</artifactId>
-          </dependency>
-          <dependency>
-              <groupId>io.quarkus</groupId>
-              <artifactId>quarkus-jdbc-mysql</artifactId>
-          </dependency>
-
-          <dependency>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
           </dependency>
       </dependencies>
   <build>

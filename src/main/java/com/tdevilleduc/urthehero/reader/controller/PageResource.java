@@ -1,7 +1,7 @@
-package com.tdevilleduc.urthehero.writer.controller;
+package com.tdevilleduc.urthehero.reader.controller;
 
-import com.tdevilleduc.urthehero.writer.model.Page;
-import com.tdevilleduc.urthehero.writer.service.PageService;
+import com.tdevilleduc.urthehero.core.model.Page;
+import com.tdevilleduc.urthehero.core.service.PageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

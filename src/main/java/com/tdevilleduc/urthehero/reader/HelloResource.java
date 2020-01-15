@@ -1,6 +1,6 @@
-package com.tdevilleduc.urthehero.writer;
+package com.tdevilleduc.urthehero.reader;
 
-import com.tdevilleduc.urthehero.writer.service.HelloService;
+import com.tdevilleduc.urthehero.core.service.HelloService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

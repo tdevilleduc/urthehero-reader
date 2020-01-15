@@ -1,4 +1,4 @@
-package com.tdevilleduc.urthehero.writer;
+package com.tdevilleduc.urthehero.reader;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
