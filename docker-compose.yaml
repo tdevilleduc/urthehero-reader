@@ -7,18 +7,12 @@ services:
     environment:
       MYSQL_DATABASE: test
       MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: tdevilleduc
       MYSQL_ROOT_HOST: '%'
     ports:
       - "3306:3306"
-    networks:
-      - urthehero
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
-
-networks:
-  urthehero:
-    driver: bridge
-    name: urthehero

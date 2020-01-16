@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
@@ -24,13 +25,16 @@ public class PageResource {
     @Inject
     PageService pageService;
 
-    @GetMapping(value = "/{pageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value = "/{pageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+    @GET
+    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    @Path("/{pageId}")
     public @ResponseBody
-    Callable<ResponseEntity<Page>> getPageById(HttpServletRequest request, @PathParam("pageId") Integer pageId) {
+    Callable<ResponseEntity<Page>> getPageById(@PathParam("pageId") Integer pageId) {
         return () -> {
             if (log.isInfoEnabled()) {
-                log.info("call: {}", request.getRequestURI());
+                log.info("call: /api/page/{}", pageId);
             }
             Optional<Page> optional = pageService.findById(pageId);
             return optional

@@ -9,7 +9,7 @@
       <surefire-plugin.version>2.22.2</surefire-plugin.version>
       <maven.compiler.target>1.8</maven.compiler.target>
       <maven.compiler.source>1.8</maven.compiler.source>
-      <quarkus.version>0.26.1</quarkus.version>
+      <quarkus.version>1.1.1.Final</quarkus.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <lombok.version>1.18.10</lombok.version>
@@ -28,10 +28,28 @@
   </dependencyManagement>
       <dependencies>
           <dependency>
-              <groupId>com.tdevilleduc.urthehero</groupId>
-              <artifactId>core</artifactId>
-              <version>1.0-SNAPSHOT</version>
+              <groupId>io.quarkus</groupId>
+              <artifactId>quarkus-spring-data-jpa</artifactId>
           </dependency>
+          <dependency>
+              <groupId>io.quarkus</groupId>
+              <artifactId>quarkus-hibernate-orm</artifactId>
+          </dependency>
+          <dependency>
+              <groupId>io.quarkus</groupId>
+              <artifactId>quarkus-jdbc-mysql</artifactId>
+          </dependency>
+
+          <dependency>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+          </dependency>
+<!--          <dependency>-->
+<!--              <groupId>com.tdevilleduc.urthehero</groupId>-->
+<!--              <artifactId>core</artifactId>-->
+<!--              <version>1.0-SNAPSHOT</version>-->
+<!--          </dependency>-->
           <dependency>
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-resteasy</artifactId>
@@ -74,6 +92,19 @@
                       <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                   </systemProperties>
               </configuration>
+          </plugin>
+          <plugin>
+              <groupId>org.jboss.jandex</groupId>
+              <artifactId>jandex-maven-plugin</artifactId>
+              <version>1.0.7</version>
+              <executions>
+                  <execution>
+                      <id>make-index</id>
+                      <goals>
+                          <goal>jandex</goal>
+                      </goals>
+                  </execution>
+              </executions>
           </plugin>
       </plugins>
   </build>
