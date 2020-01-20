@@ -14,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/page")
-public class PageResource {
+public class PageController {
 
     @Inject
     IPageService pageService;
@@ -22,7 +22,7 @@ public class PageResource {
     @GetMapping(value = "/{pageId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<Page> getPageById(@PathVariable Integer pageId) {
+    ResponseEntity<Page> getPageById(@PathVariable(name = "pageId") Integer pageId) {
         if (log.isInfoEnabled()) {
             log.info("call: /api/page/{}", pageId);
         }
