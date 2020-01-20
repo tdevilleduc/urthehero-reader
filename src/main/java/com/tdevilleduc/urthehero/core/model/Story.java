@@ -3,29 +3,37 @@ package com.tdevilleduc.urthehero.core.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
 
 @Entity
-@Table(name = "page")
+@Table(name = "story")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Page {
+public class Story {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NonNull
-    private Integer id;
+    private Integer storyId;
     @NonNull
-    private String text;
+    private String title;
+    @NonNull
+    private Integer authorId;
+    @NonNull
+    private Integer firstPageId;
+    @NonNull
+    private String detailedText;
     @NonNull
     private String image;
 
     @Transient
-    private List<NextPage> nextPageList = Collections.emptyList();
-}
+    private Integer currentPageId;
+    @Transient
+    private Long numberOfReaders;
 
+
+
+}

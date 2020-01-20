@@ -8,9 +8,9 @@ import java.util.Optional;
 @ApplicationScoped
 public interface IPageService {
 
-//    boolean exists(Integer pageId);
-//    boolean notExists(Integer pageId);
+    boolean exists(Integer pageId);
+    boolean notExists(Integer pageId);
     Optional<Page> findById(Integer pageId);
-//    Page createOrUpdate(Page page);
-//    void delete(Integer pageId);
+    Page createOrUpdate(Page page);
+    void delete(Integer pageId);
 }

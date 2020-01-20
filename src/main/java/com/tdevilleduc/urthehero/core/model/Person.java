@@ -1,31 +1,33 @@
 package com.tdevilleduc.urthehero.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "page")
+@Table(name = "person")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Page {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
+    @NotNull
     private Integer id;
     @NonNull
-    private String text;
+    private String login;
     @NonNull
-    private String image;
+    private String displayName;
+    @NonNull
+    private String email;
 
-    @Transient
-    private List<NextPage> nextPageList = Collections.emptyList();
+    @JsonIgnore
+    private String password;
+
 }
-
