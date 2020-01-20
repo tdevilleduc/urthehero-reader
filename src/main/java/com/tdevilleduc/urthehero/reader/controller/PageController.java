@@ -27,11 +27,6 @@ public class PageController {
             log.info("call: /api/page/{}", pageId);
         }
         Optional<Page> optional = pageService.findById(pageId);
-        if (optional.isPresent()) {
-            log.info("optional : {}", optional.get().toString());
-        } else {
-            log.info("DTC");
-        }
         return optional
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
