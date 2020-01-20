@@ -2,12 +2,12 @@ version: '3.7'
 
 services:
   mysql:
-    container_name: urthehero-mysql
-    image: mysql/mysql-server:5.7
+    container_name: mysql
+    image: mysql:8.0.19
     environment:
       MYSQL_DATABASE: test
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: test123
       MYSQL_ROOT_PASSWORD: tdevilleduc
       MYSQL_ROOT_HOST: '%'
     ports:
@@ -16,3 +16,24 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
+
+  back:
+    container_name: urthehero-back
+    image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.0-13
+    volumes:
+      - ./target:/deployments
+    environment:
+      JAVA_APP_JAR: reader-1.0-SNAPSHOT-runner.jar
+      JAVA_OPTIONS: "-Dquarkus.profile=docker -Dfile.encoding=UTF8"
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - urthehero
+    depends_on:
+      - mysql
+
+networks:
+  urthehero:
+    driver: bridge
+    name: urthehero
