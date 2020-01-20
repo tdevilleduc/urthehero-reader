@@ -19,7 +19,7 @@ import java.util.Optional;
 public class PersonService implements IPersonService {
 
     @Autowired
-    private PersonDao personDao;
+    PersonDao personDao;
 
     public boolean exists(final Integer personId) {
         Optional<Person> person = personDao.findById(personId);

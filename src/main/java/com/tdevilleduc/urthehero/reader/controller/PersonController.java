@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/person")
-class PersonController {
+public class PersonController {
 
     private final IPersonService personService;
 
@@ -30,44 +29,36 @@ class PersonController {
     @GetMapping(value="/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Callable<ResponseEntity<List<Person>>> getPersons() {
-        return () -> {
-            return ResponseEntity.ok(personService.findAll());
-        };
+    ResponseEntity<List<Person>> getPersons() {
+        return ResponseEntity.ok(personService.findAll());
     }
 
     @GetMapping(value="/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Callable<ResponseEntity<Person>> getPersonById(@PathVariable Integer personId) {
-        return () -> {
-            Optional<Person> optional = personService.findById(personId);
-            return optional
-                    .map(ResponseEntity::ok)
-                    .orElseGet(() -> ResponseEntity.notFound().build());
-        };
+    ResponseEntity<Person> getPersonById(@PathVariable Integer personId) {
+        Optional<Person> optional = personService.findById(personId);
+        return optional
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
   
     @PutMapping
     public @ResponseBody
-    Callable<ResponseEntity<Person>> createPerson(@RequestBody @NotNull Person person) {
-        return () -> {
-            if (person.getId() != null && personService.exists(person.getId())) {
-                throw new PersonInternalErrorException(MessageFormatter.format("Une personne avec l'identifiant {} existe déjà. Elle ne peut être créée", person.getId()).getMessage());
-            }
-            return ResponseEntity.ok(personService.createOrUpdate(person));
-        };
+    ResponseEntity<Person> createPerson(@RequestBody @NotNull Person person) {
+        if (person.getId() != null && personService.exists(person.getId())) {
+            throw new PersonInternalErrorException(MessageFormatter.format("Une personne avec l'identifiant {} existe déjà. Elle ne peut être créée", person.getId()).getMessage());
+        }
+        return ResponseEntity.ok(personService.createOrUpdate(person));
     }
 
     @PostMapping
     public @ResponseBody
-    Callable<ResponseEntity<Person>> updatePerson(@RequestBody @NotNull Person person) {
-        return () -> {
-            Assert.notNull(person.getId(), () -> {
-                throw new PersonInternalErrorException("L'identifiant de la personne passée en paramètre ne peut pas être null");
-            });
-            return ResponseEntity.ok(personService.createOrUpdate(person));
-        };
+    ResponseEntity<Person> updatePerson(@RequestBody @NotNull Person person) {
+        Assert.notNull(person.getId(), () -> {
+            throw new PersonInternalErrorException("L'identifiant de la personne passée en paramètre ne peut pas être null");
+        });
+        return ResponseEntity.ok(personService.createOrUpdate(person));
     }
 
     @DeleteMapping(value = "/{personId}")

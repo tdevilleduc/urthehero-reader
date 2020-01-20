@@ -15,9 +15,9 @@ import java.util.List;
 public class NextPageService implements INextPageService {
 
     @Autowired
-    private IPageService pageService;
+    IPageService pageService;
     @Autowired
-    private NextPageDao nextPageDao;
+    NextPageDao nextPageDao;
 
     public List<NextPage> findByPageId(Integer pageId) {
         if (pageService.notExists(pageId)) {

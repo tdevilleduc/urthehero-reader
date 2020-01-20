@@ -24,7 +24,7 @@ public class StoryService implements IStoryService {
 //    @Autowired
 //    private IProgressionService progressionService;
     @Autowired
-    private StoryDao storyDao;
+    StoryDao storyDao;
 
     public boolean exists(final Integer storyId) {
         Assert.notNull(storyId, "The story parameter is mandatory !");

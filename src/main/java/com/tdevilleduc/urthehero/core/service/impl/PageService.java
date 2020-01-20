@@ -23,7 +23,7 @@ public class PageService implements IPageService {
 //    @Autowired
 //    private INextPageService nextPageService;
     @Autowired
-    private PageDao pageDao;
+    PageDao pageDao;
 
     public boolean exists(final Integer pageId) {
         Assert.notNull(pageId, "The pageId parameter is mandatory !");

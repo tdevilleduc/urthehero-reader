@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/dice")
-class DiceController {
+public class DiceController {
 
     private final IDiceService diceService;
 
@@ -28,28 +27,24 @@ class DiceController {
     @GetMapping(value = "/roll/{dice}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Callable<ResponseEntity<DiceValue>> roll(@PathVariable(name = "dice") Dice dice) {
-        return () -> {
-            Assert.notNull(dice, "The dice parameter is mandatory !");
-            return ResponseEntity.ok(diceService.roll(dice));
-        };
+    ResponseEntity<DiceValue> roll(@PathVariable(name = "dice") Dice dice) {
+        Assert.notNull(dice, "The dice parameter is mandatory !");
+        return ResponseEntity.ok(diceService.roll(dice));
     }
 
     @GetMapping(value = "/roll/{dice}/{count}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    Callable<ResponseEntity<List<DiceValue>>> roll(@PathVariable(name = "dice") Dice dice,
-                                                   @PathVariable(name = "count") Integer count) {
-        return () -> {
-            Assert.notNull(dice, "The dice parameter is mandatory !");
-            Assert.notNull(count, "The dice parameter is mandatory !");
-            List<DiceValue> diceValues = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                diceValues.add(diceService.roll(dice));
-            }
+    ResponseEntity<List<DiceValue>> roll(@PathVariable(name = "dice") Dice dice,
+                                         @PathVariable(name = "count") Integer count) {
+        Assert.notNull(dice, "The dice parameter is mandatory !");
+        Assert.notNull(count, "The dice parameter is mandatory !");
+        List<DiceValue> diceValues = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            diceValues.add(diceService.roll(dice));
+        }
 
-            return ResponseEntity.ok(diceValues);
-        };
+        return ResponseEntity.ok(diceValues);
     }
 
 }

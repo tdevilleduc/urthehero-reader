@@ -26,13 +26,13 @@ import java.util.Optional;
 public class ProgressionService implements IProgressionService {
 
     @Autowired
-    private IStoryService storyService;
+    IStoryService storyService;
     @Autowired
-    private IPersonService personService;
+    IPersonService personService;
     @Autowired
-    private IPageService pageService;
+    IPageService pageService;
     @Autowired
-    private ProgressionDao progressionDao;
+    ProgressionDao progressionDao;
 
     public Progression doProgressionAction(final Integer personId, final Integer storyId, final Integer pageId) {
         Assert.notNull(personId, "The personId parameter is mandatory !");
