@@ -1,6 +1,6 @@
 # URtheHero - Quarkus version
 
-[![Build Status](https://travis-ci.org/tdevilleduc/urthehero-reader.svg)](https://travis-ci.org/tdevilleduc/urthehero-reader)
+[![Build Status](https://travis-ci.com/tdevilleduc/urthehero-reader.svg)](https://travis-ci.com/tdevilleduc/urthehero-reader)
 
 
 ```bash
