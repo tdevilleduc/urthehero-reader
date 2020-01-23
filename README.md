@@ -1,4 +1,7 @@
-quarkus-test
+# URtheHero - Quarkus version
+
+[![Build Status](https://travis-ci.com/tdevilleduc/urthehero-reader.svg)](https://travis-ci.com/tdevilleduc/urthehero-reader)
+
 
 ```bash
 mvn clean install
