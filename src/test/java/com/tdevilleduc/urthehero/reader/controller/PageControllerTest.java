@@ -1,13 +1,13 @@
 package com.tdevilleduc.urthehero.reader.controller;
 
+import com.tdevilleduc.urthehero.reader.AbstractTest;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class PageControllerTest  {
+class PageControllerTest extends AbstractTest {
 
     private static final String uriController = "/api/page";
     @Test
@@ -15,7 +15,6 @@ class PageControllerTest  {
         given()
                 .when().get(uriController + "/1")
                 .then()
-                .statusCode(200);
-//                .body(is("hello"));
+                .statusCode(200);;
     }
 }
