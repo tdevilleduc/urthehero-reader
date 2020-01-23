@@ -53,11 +53,12 @@ public class ProgressionController {
         }
 
         Optional<Progression> progression = progressionService.findByPersonIdAndStoryId(personId, storyId);
-        if (progression.isEmpty()) {
+        if (progression.isPresent()) {
+
+            return ResponseEntity.ok(progression.get());
+        } else {
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(progression.get());
     }
 
     @PostMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")

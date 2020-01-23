@@ -3,7 +3,6 @@ package com.tdevilleduc.urthehero.reader.controller;
 import com.tdevilleduc.urthehero.core.exceptions.PageInternalErrorException;
 import com.tdevilleduc.urthehero.core.model.Page;
 import com.tdevilleduc.urthehero.core.service.IPageService;
-import com.tdevilleduc.urthehero.core.service.IStoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.http.HttpStatus;
@@ -20,24 +19,9 @@ import java.util.Optional;
 @RequestMapping("/api/page")
 public class PageController {
 
-//    @GetMapping(value = "/{pageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    public @ResponseBody
-//    ResponseEntity<Page> getPageById(@PathVariable(name = "pageId") Integer pageId) {
-//        if (log.isInfoEnabled()) {
-//            log.info("call: /api/page/{}", pageId);
-//        }
-//        Optional<Page> optional = pageService.findById(pageId);
-//        return optional
-//                .map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-
-    private final IStoryService storyService;
     private final IPageService pageService;
 
-    public PageController(IStoryService storyService, IPageService pageService) {
-        this.storyService = storyService;
+    public PageController(IPageService pageService) {
         this.pageService = pageService;
     }
 

@@ -14,7 +14,7 @@ public class DiceService implements IDiceService {
     }
 
     private Integer generatingRandomIntegerBounded(Integer rightLimit) {
-//        return new RandomDataGenerator().nextInt(1, rightLimit);
+        // TODO recréer le comportement de géneration aléatoire de nombre
         return 1;
     }
 }

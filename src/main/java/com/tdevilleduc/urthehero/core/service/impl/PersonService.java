@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,18 +38,8 @@ public class PersonService implements IPersonService {
         return personDao.findById(personId);
     }
 
-    private Optional<Person> emptyPerson(final Integer personId, final Throwable e) {
-        log.error("Unable to retrieve person with id {}", personId, e);
-        return Optional.empty();
-    }
-
     public List<Person> findAll() {
         return personDao.findAll();
-    }
-
-    private List<Person> emptyPersonList(final Throwable e) {
-        log.error("Unable to retrieve person list", e);
-        return Collections.emptyList();
     }
 
     public Person createOrUpdate(Person person) {

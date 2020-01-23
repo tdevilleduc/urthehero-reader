@@ -49,16 +49,6 @@ public class StoryController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @GetMapping(value = "/all/person/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    public @ResponseBody
-//    ResponseEntity<List<Story>> getStoryByPersonId(@PathVariable Integer personId) {
-//            if (personService.notExists(personId)) {
-//                return ResponseEntity.notFound().build();
-//            }
-//            return ResponseEntity.ok(this.storyService.findByPersonId(personId));
-//    }
-
     @PutMapping
     public @ResponseBody
     ResponseEntity<Story> createStory(@RequestBody Story story) {

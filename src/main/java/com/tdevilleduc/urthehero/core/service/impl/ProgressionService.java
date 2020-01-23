@@ -5,7 +5,6 @@ import com.tdevilleduc.urthehero.core.exceptions.PageNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.ProgressionNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.StoryNotFoundException;
-import com.tdevilleduc.urthehero.core.model.Page;
 import com.tdevilleduc.urthehero.core.model.Progression;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import com.tdevilleduc.urthehero.core.service.IPersonService;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,16 +48,16 @@ public class ProgressionService implements IProgressionService {
         }
 
         Optional<Progression> optionalProgression = progressionDao.findByPersonIdAndStoryId(personId, storyId);
-        if (optionalProgression.isEmpty()) {
+        if (optionalProgression.isPresent()) {
+            Progression progression = optionalProgression.get();
+
+            // TODO: vérifier qu'on a le droit d'avancer sur cette page depuis la page précédente
+            progression.setActualPageId(pageId);
+
+            return progressionDao.save(progression);
+        } else {
             throw new ProgressionNotFoundException("Aucune progression avec le personId " + personId + " et le storyId " + storyId);
         }
-
-        Progression progression = optionalProgression.get();
-
-        // TODO: vérifier qu'on a le droit d'avancer sur cette page depuis la page précédente
-        progression.setActualPageId(pageId);
-
-        return progressionDao.save(progression);
     }
 
     public List<Progression> findByPersonId(final Integer personId) {
@@ -69,10 +67,6 @@ public class ProgressionService implements IProgressionService {
         }
 
         return progressionDao.findByPersonId(personId);
-    }
-
-    private List<Progression> emptyProgressionList(final Integer personId, final Throwable e) {
-        return Collections.emptyList();
     }
 
     public Optional<Progression> findByPersonIdAndStoryId(final Integer personId, final Integer storyId) {
@@ -88,10 +82,6 @@ public class ProgressionService implements IProgressionService {
         return progressionDao.findByPersonIdAndStoryId(personId, storyId);
     }
 
-    private Optional<Page> emptyProgression(final Integer personId, final Integer storyId, final Throwable e) {
-        return Optional.empty();
-    }
-
     public Long countByStoryId(final Integer storyId) {
         Assert.notNull(storyId, "The storyId parameter is mandatory !");
         if (storyService.notExists(storyId)) {
@@ -99,9 +89,5 @@ public class ProgressionService implements IProgressionService {
         }
 
         return progressionDao.countByStoryId(storyId);
-    }
-
-    private Long emptyProgressionCount(final Integer storyId, final Throwable e) {
-        return 0L;
     }
 }
