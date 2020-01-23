@@ -7,12 +7,13 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
       <surefire-plugin.version>2.22.2</surefire-plugin.version>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>11</maven.compiler.target>
+      <maven.compiler.source>11</maven.compiler.source>
       <quarkus.version>1.2.0.Final</quarkus.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <lombok.version>1.18.10</lombok.version>
+      <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -45,11 +46,6 @@
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
           </dependency>
-<!--          <dependency>-->
-<!--              <groupId>com.tdevilleduc.urthehero</groupId>-->
-<!--              <artifactId>core</artifactId>-->
-<!--              <version>1.0-SNAPSHOT</version>-->
-<!--          </dependency>-->
           <dependency>
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-resteasy</artifactId>
@@ -105,6 +101,15 @@
                       </goals>
                   </execution>
               </executions>
+          </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>${maven-compiler-plugin.version}</version>
+              <configuration>
+                  <source>${maven.compiler.source}</source>
+                  <target>${maven.compiler.target}</target>
+              </configuration>
           </plugin>
       </plugins>
   </build>
