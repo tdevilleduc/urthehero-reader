@@ -30,14 +30,14 @@ public class PersonController {
     @GetMapping(value="/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<List<Person>> getPersons() {
+    ResponseEntity<List<Person>> getAllPersons() {
         return ResponseEntity.ok(personService.findAll());
     }
 
     @GetMapping(value="/{personId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<Person> getPersonById(@PathVariable Integer personId) {
+    ResponseEntity<Person> getPersonById(@PathVariable(name = "personId") Integer personId) {
         Optional<Person> optional = personService.findById(personId);
         return optional
                 .map(ResponseEntity::ok)
@@ -64,7 +64,7 @@ public class PersonController {
 
     @DeleteMapping(value = "/{personId}")
     public @ResponseBody
-    void deletePerson(@PathVariable @NotNull Integer personId) {
+    void deletePerson(@PathVariable(name = "personId") @NotNull Integer personId) {
         personService.delete(personId);
     }
 }

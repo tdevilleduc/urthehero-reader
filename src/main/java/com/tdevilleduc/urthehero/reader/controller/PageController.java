@@ -61,7 +61,7 @@ public class PageController {
     }
 
     @DeleteMapping(value = "/{pageId}")
-    public @ResponseBody void deletePage(@PathVariable @NotNull Integer pageId) {
+    public @ResponseBody void deletePage(@PathVariable(name = "pageId") @NotNull Integer pageId) {
         pageService.delete(pageId);
     }
 }

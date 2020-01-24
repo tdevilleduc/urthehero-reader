@@ -46,7 +46,7 @@ public class StoryController {
     @GetMapping(value = "/{storyId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<Story> getStoryById(@PathVariable Integer storyId) {
+    ResponseEntity<Story> getStoryById(@PathVariable(name = "storyId") Integer storyId) {
         Optional<Story> optional = this.storyService.findById(storyId);
         return optional
                 .map(ResponseEntity::ok)
@@ -102,7 +102,7 @@ public class StoryController {
 
     @DeleteMapping(value = "/{storyId}")
     public @ResponseBody
-    void deleteStory(@PathVariable Integer storyId) {
+    void deleteStory(@PathVariable(name = "storyId") Integer storyId) {
         storyService.delete(storyId);
     }
 }
