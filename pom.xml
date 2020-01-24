@@ -16,6 +16,7 @@
       <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
       <testcontainers.version>1.12.4</testcontainers.version>
       <modelmapper.version>2.3.6</modelmapper.version>
+      <apache-commons-math3.version>3.6.1</apache-commons-math3.version>
   </properties>
 
   <dependencyManagement>
@@ -75,6 +76,11 @@
               <groupId>org.modelmapper</groupId>
               <artifactId>modelmapper</artifactId>
               <version>${modelmapper.version}</version>
+          </dependency>
+          <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-math3</artifactId>
+              <version>${apache-commons-math3.version}</version>
           </dependency>
       </dependencies>
   <build>
