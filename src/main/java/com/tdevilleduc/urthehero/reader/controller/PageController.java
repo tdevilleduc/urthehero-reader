@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -34,6 +35,13 @@ public class PageController {
         return optional
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<List<Page>> getAllPages() {
+        return ResponseEntity.ok(pageService.findAll());
     }
 
     @PutMapping
