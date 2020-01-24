@@ -1,8 +1,10 @@
 package com.tdevilleduc.urthehero.core.service.impl;
 
+import com.tdevilleduc.urthehero.core.convertor.PersonConvertor;
 import com.tdevilleduc.urthehero.core.dao.PersonDao;
 import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
 import com.tdevilleduc.urthehero.core.model.Person;
+import com.tdevilleduc.urthehero.core.model.dto.PersonDTO;
 import com.tdevilleduc.urthehero.core.service.IPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
@@ -19,6 +21,8 @@ public class PersonService implements IPersonService {
 
     @Autowired
     PersonDao personDao;
+    @Autowired
+    private PersonConvertor personConvertor;
 
     public boolean exists(final Integer personId) {
         Optional<Person> person = personDao.findById(personId);
@@ -42,8 +46,9 @@ public class PersonService implements IPersonService {
         return personDao.findAll();
     }
 
-    public Person createOrUpdate(Person person) {
-        return personDao.save(person);
+    public PersonDTO createOrUpdate(PersonDTO personDto) {
+        Person person = personConvertor.convertToEntity(personDto);
+        return personConvertor.convertToDto(personDao.save(person));
     }
 
     public void delete(Integer personId) {

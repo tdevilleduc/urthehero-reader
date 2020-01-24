@@ -15,6 +15,7 @@
       <lombok.version>1.18.10</lombok.version>
       <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
       <testcontainers.version>1.12.4</testcontainers.version>
+      <modelmapper.version>2.3.6</modelmapper.version>
   </properties>
 
   <dependencyManagement>
@@ -41,7 +42,6 @@
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-jdbc-mysql</artifactId>
           </dependency>
-
           <dependency>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
@@ -70,6 +70,11 @@
               <artifactId>mysql</artifactId>
               <version>${testcontainers.version}</version>
               <scope>test</scope>
+          </dependency>
+          <dependency>
+              <groupId>org.modelmapper</groupId>
+              <artifactId>modelmapper</artifactId>
+              <version>${modelmapper.version}</version>
           </dependency>
       </dependencies>
   <build>

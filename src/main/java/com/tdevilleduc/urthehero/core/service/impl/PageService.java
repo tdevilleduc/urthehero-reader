@@ -1,8 +1,10 @@
 package com.tdevilleduc.urthehero.core.service.impl;
 
+import com.tdevilleduc.urthehero.core.convertor.PageConvertor;
 import com.tdevilleduc.urthehero.core.dao.PageDao;
 import com.tdevilleduc.urthehero.core.exceptions.PageNotFoundException;
 import com.tdevilleduc.urthehero.core.model.Page;
+import com.tdevilleduc.urthehero.core.model.dto.PageDTO;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
@@ -19,6 +21,8 @@ public class PageService implements IPageService {
 
     @Autowired
     PageDao pageDao;
+    @Autowired
+    private PageConvertor pageConvertor;
 
     public boolean exists(final Integer pageId) {
         Assert.notNull(pageId, "The pageId parameter is mandatory !");
@@ -43,8 +47,9 @@ public class PageService implements IPageService {
         return pageDao.findAll();
     }
 
-    public Page createOrUpdate(Page page) {
-        return pageDao.save(page);
+    public PageDTO createOrUpdate(PageDTO pageDTO) {
+        Page page = pageConvertor.convertToEntity(pageDTO);
+        return pageConvertor.convertToDto(pageDao.save(page));
     }
 
     public void delete(Integer pageId) {

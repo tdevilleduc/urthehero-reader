@@ -1,6 +1,7 @@
 package com.tdevilleduc.urthehero.core.service;
 
 import com.tdevilleduc.urthehero.core.model.Person;
+import com.tdevilleduc.urthehero.core.model.dto.PersonDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,6 @@ public interface IPersonService {
     boolean notExists(Integer personId);
     Optional<Person> findById(Integer personId);
     List<Person> findAll();
-    Person createOrUpdate(Person person);
+    PersonDTO createOrUpdate(PersonDTO personDto);
     void delete(Integer personId);
 }
