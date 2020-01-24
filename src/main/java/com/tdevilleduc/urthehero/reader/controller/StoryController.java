@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PAGE_DOESNOT_EXIST;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PERSON_DOESNOT_EXIST;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/story")
@@ -61,10 +64,10 @@ public class StoryController {
             throw new StoryInternalErrorException("La première page de l'histoire passée en paramètre ne peut pas être null");
         });
         if (personService.notExists(storyDto.getAuthorId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La personne avec l'id {} n'existe pas", storyDto.getAuthorId()).getMessage());
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, storyDto.getAuthorId()).getMessage());
         }
         if (pageService.notExists(storyDto.getFirstPageId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La page avec l'id {} n'existe pas", storyDto.getFirstPageId()).getMessage());
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, storyDto.getFirstPageId()).getMessage());
         }
         if (storyDto.getStoryId() != null && storyService.exists(storyDto.getStoryId())) {
             throw new StoryInternalErrorException(MessageFormatter.format("L'id {} existe déjà. Elle ne peut être créée", storyDto.getStoryId()).getMessage());
@@ -86,10 +89,10 @@ public class StoryController {
             throw new StoryInternalErrorException("L'identifiant de l'histoire passée en paramètre ne peut pas être null");
         });
         if (personService.notExists(storyDto.getAuthorId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La personne avec l'id {} n'existe pas", storyDto.getAuthorId()).getMessage());
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, storyDto.getAuthorId()).getMessage());
         }
         if (pageService.notExists(storyDto.getFirstPageId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La page avec l'id {} n'existe pas", storyDto.getFirstPageId()).getMessage());
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, storyDto.getFirstPageId()).getMessage());
         }
         if (storyService.notExists(storyDto.getStoryId())) {
             throw new StoryInternalErrorException(MessageFormatter.format("L'id {} n'existe pas", storyDto.getStoryId()).getMessage());

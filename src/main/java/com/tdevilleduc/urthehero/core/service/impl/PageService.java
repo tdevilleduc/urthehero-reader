@@ -15,6 +15,9 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_PAGEID_PARAMETER_MANDATORY;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PAGE_DOESNOT_EXIST;
+
 @Slf4j
 @Service
 public class PageService implements IPageService {
@@ -22,13 +25,13 @@ public class PageService implements IPageService {
     @Autowired
     PageDao pageDao;
     @Autowired
-    private PageConvertor pageConvertor;
+    PageConvertor pageConvertor;
 
     public boolean exists(final Integer pageId) {
-        Assert.notNull(pageId, "The pageId parameter is mandatory !");
+        Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
         Optional<Page> page = pageDao.findById(pageId);
         if (page.isEmpty()) {
-            log.error("La page avec l'id {} n'existe pas", pageId);
+            log.error(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId);
             return false;
         }
         return true;
@@ -39,7 +42,7 @@ public class PageService implements IPageService {
     }
 
     public Optional<Page> findById(final Integer pageId) {
-        Assert.notNull(pageId, "The pageId parameter is mandatory !");
+        Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
         return pageDao.findById(pageId);
     }
 
@@ -53,12 +56,12 @@ public class PageService implements IPageService {
     }
 
     public void delete(Integer pageId) {
-        Assert.notNull(pageId, "The pageId parameter is mandatory !");
+        Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
         Optional<Page> optional = findById(pageId);
         optional
                 .ifPresentOrElse(page -> pageDao.delete(page),
                         () -> {
-                            throw new PageNotFoundException(MessageFormatter.format("La page avec l'id {} n'existe pas", pageId).getMessage());
+                            throw new PageNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId).getMessage());
                         }
                 );
     }

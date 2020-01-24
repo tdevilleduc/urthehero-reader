@@ -15,6 +15,9 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_PERSONID_PARAMETER_MANDATORY;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PERSON_DOESNOT_EXIST;
+
 @Slf4j
 @Service
 public class PersonService implements IPersonService {
@@ -22,12 +25,12 @@ public class PersonService implements IPersonService {
     @Autowired
     PersonDao personDao;
     @Autowired
-    private PersonConvertor personConvertor;
+    PersonConvertor personConvertor;
 
     public boolean exists(final Integer personId) {
         Optional<Person> person = personDao.findById(personId);
         if (person.isEmpty()) {
-            log.error("La personne avec l'id {} n'existe pas", personId);
+            log.error(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId);
             return false;
         }
         return true;
@@ -38,7 +41,7 @@ public class PersonService implements IPersonService {
     }
 
     public Optional<Person> findById(final Integer personId) {
-        Assert.notNull(personId, "The personId parameter is mandatory !");
+        Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);
         return personDao.findById(personId);
     }
 
@@ -52,12 +55,12 @@ public class PersonService implements IPersonService {
     }
 
     public void delete(Integer personId) {
-        Assert.notNull(personId, "The personId parameter is mandatory !");
+        Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);
         Optional<Person> optional = findById(personId);
         optional
             .ifPresentOrElse(person -> personDao.delete(person),
                 () -> {
-                    throw new PersonNotFoundException(MessageFormatter.format("La personne avec l'id {} n'existe pas", personId).getMessage());
+                    throw new PersonNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId).getMessage());
                 }
         );
     }

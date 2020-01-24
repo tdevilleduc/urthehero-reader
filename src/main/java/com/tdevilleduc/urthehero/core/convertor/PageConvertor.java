@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class PageConvertor {
 
     @Autowired
-    private ModelMapper modelMapper;
+    ModelMapper modelMapper;
 
     public PageDTO convertToDto(Page page) {
         return modelMapper.map(page, PageDTO.class);

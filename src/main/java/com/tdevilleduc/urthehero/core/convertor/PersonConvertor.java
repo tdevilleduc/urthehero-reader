@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class PersonConvertor {
 
     @Autowired
-    private ModelMapper modelMapper;
+    ModelMapper modelMapper;
 
     public PersonDTO convertToDto(Person person) {
         return modelMapper.map(person, PersonDTO.class);

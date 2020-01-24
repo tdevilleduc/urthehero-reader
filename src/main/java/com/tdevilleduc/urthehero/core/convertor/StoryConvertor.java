@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class StoryConvertor {
 
     @Autowired
-    private ModelMapper modelMapper;
+    ModelMapper modelMapper;
 
     public StoryDTO convertToDto(Story story) {
         return modelMapper.map(story, StoryDTO.class);

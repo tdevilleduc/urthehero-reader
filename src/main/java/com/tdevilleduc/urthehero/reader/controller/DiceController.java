@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_COUNT_PARAMETER_MANDATORY;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_DICE_PARAMETER_MANDATORY;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/dice")
@@ -28,7 +31,7 @@ public class DiceController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<DiceValue> roll(@PathVariable(name = "dice") Dice dice) {
-        Assert.notNull(dice, "The dice parameter is mandatory !");
+        Assert.notNull(dice, CHECK_DICE_PARAMETER_MANDATORY);
         return ResponseEntity.ok(diceService.roll(dice));
     }
 
@@ -37,8 +40,8 @@ public class DiceController {
     public @ResponseBody
     ResponseEntity<List<DiceValue>> roll(@PathVariable(name = "dice") Dice dice,
                                          @PathVariable(name = "count") Integer count) {
-        Assert.notNull(dice, "The dice parameter is mandatory !");
-        Assert.notNull(count, "The dice parameter is mandatory !");
+        Assert.notNull(dice, CHECK_DICE_PARAMETER_MANDATORY);
+        Assert.notNull(count, CHECK_COUNT_PARAMETER_MANDATORY);
         List<DiceValue> diceValues = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             diceValues.add(diceService.roll(dice));
