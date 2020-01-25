@@ -1,4 +1,4 @@
--- personId, displayName, login, email
+-- personId, displayName, login, email, password
 INSERT INTO person VALUES(1, 'Thomas Deville-Duc', 'thomas@gmail.com', 'tdevilleduc', 'password');
 INSERT INTO person VALUES(2, 'Marion Gianesini', 'marion@gmail.com', 'mgianesini', 'password');
 INSERT INTO person VALUES(3, 'Nicolas Danet', 'nicolas@gmail.com', 'ndanet', 'password');
@@ -11,8 +11,8 @@ INSERT INTO page(id, image, text) VALUES(5, 'image3', 'Le roman est notamment c√
 INSERT INTO page(id, image, text) VALUES(6, 'image3', 'Toutefois');
 INSERT INTO page(id, image, text) VALUES(7, 'image3', 'Madame Bovary');
 INSERT INTO page(id, image, text) VALUES(8, 'image2', 'En plein centre');
--- storyId, authorId, firstPageId, title
-INSERT INTO story(storyId, authorId, firstPageId, title, detailedText, image) VALUES(1, 1, 1, 'Ulysse', 'blablabla Ulysse prenons un texte long pour d√©crire lhistoire', 'imageUlysse');
+-- storyId, authorId, firstPageId, title, detailedText, image
+INSERT INTO story(storyId, authorId, firstPageId, title, detailedText, image) VALUES(1, 1, 1, 'Ulysse', 'blablabla Ulysse prenons un texte long pour decrire lhistoire', 'imageUlysse');
 INSERT INTO story(storyId, authorId, firstPageId, title, detailedText, image) VALUES(2, 2, 4, 'Voyage au bout de la nuit', 'bliblibli voyage voyage !!', 'imageVoyage');
 INSERT INTO story(storyId, authorId, firstPageId, title, detailedText, image) VALUES(3, 3, 7, 'Madame Bovary', 'blablabla Bovary', 'imageBovary');
 -- progressionId, pageId, personId, storyId
