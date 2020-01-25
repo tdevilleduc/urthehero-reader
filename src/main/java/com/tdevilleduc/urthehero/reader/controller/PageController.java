@@ -2,6 +2,7 @@ package com.tdevilleduc.urthehero.reader.controller;
 
 import com.tdevilleduc.urthehero.core.exceptions.PageInternalErrorException;
 import com.tdevilleduc.urthehero.core.model.Page;
+import com.tdevilleduc.urthehero.core.model.dto.PageDTO;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
@@ -12,6 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -35,20 +37,27 @@ public class PageController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<List<Page>> getAllPages() {
+        return ResponseEntity.ok(pageService.findAll());
+    }
+
     @PutMapping
-    public @ResponseBody ResponseEntity<Page> createPage(@RequestBody @NotNull Page page) {
-        if (page.getId() != null && pageService.exists(page.getId())) {
-            throw new PageInternalErrorException(MessageFormatter.format("Une page avec l'identifiant {} existe déjà. Elle ne peut être créée", page.getId()).getMessage());
+    public @ResponseBody ResponseEntity<PageDTO> createPage(@RequestBody @NotNull PageDTO pageDto) {
+        if (pageDto.getId() != null && pageService.exists(pageDto.getId())) {
+            throw new PageInternalErrorException(MessageFormatter.format("Une page avec l'identifiant {} existe déjà. Elle ne peut être créée", pageDto.getId()).getMessage());
         }
-        return ResponseEntity.ok(pageService.createOrUpdate(page));
+        return ResponseEntity.ok(pageService.createOrUpdate(pageDto));
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<Page> updatePage(@RequestBody @NotNull Page page) {
-        Assert.notNull(page.getId(), () -> {
+    public @ResponseBody ResponseEntity<PageDTO> updatePage(@RequestBody @NotNull PageDTO pageDto) {
+        Assert.notNull(pageDto.getId(), () -> {
             throw new PageInternalErrorException("L'identifiant de la page passée en paramètre ne peut pas être null");
         });
-        return ResponseEntity.ok(pageService.createOrUpdate(page));
+        return ResponseEntity.ok(pageService.createOrUpdate(pageDto));
     }
 
     @DeleteMapping(value = "/{pageId}")

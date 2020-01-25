@@ -2,6 +2,7 @@ package com.tdevilleduc.urthehero.reader.controller;
 
 import com.tdevilleduc.urthehero.core.exceptions.StoryInternalErrorException;
 import com.tdevilleduc.urthehero.core.model.Story;
+import com.tdevilleduc.urthehero.core.model.dto.StoryDTO;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import com.tdevilleduc.urthehero.core.service.IPersonService;
 import com.tdevilleduc.urthehero.core.service.IStoryService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PAGE_DOESNOT_EXIST;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PERSON_DOESNOT_EXIST;
 
 @Slf4j
 @RestController
@@ -51,49 +55,49 @@ public class StoryController {
 
     @PutMapping
     public @ResponseBody
-    ResponseEntity<Story> createStory(@RequestBody Story story) {
+    ResponseEntity<StoryDTO> createStory(@RequestBody StoryDTO storyDto) {
         //TODO: déplacer les controles dans le service ?
-        Assert.notNull(story.getAuthorId(), () -> {
+        Assert.notNull(storyDto.getAuthorId(), () -> {
             throw new StoryInternalErrorException("L'auteur de l'histoire passée en paramètre ne peut pas être null");
         });
-        Assert.notNull(story.getFirstPageId(), () -> {
+        Assert.notNull(storyDto.getFirstPageId(), () -> {
             throw new StoryInternalErrorException("La première page de l'histoire passée en paramètre ne peut pas être null");
         });
-        if (personService.notExists(story.getAuthorId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La personne avec l'id {} n'existe pas", story.getAuthorId()).getMessage());
+        if (personService.notExists(storyDto.getAuthorId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, storyDto.getAuthorId()).getMessage());
         }
-        if (pageService.notExists(story.getFirstPageId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La page avec l'id {} n'existe pas", story.getFirstPageId()).getMessage());
+        if (pageService.notExists(storyDto.getFirstPageId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, storyDto.getFirstPageId()).getMessage());
         }
-        if (story.getStoryId() != null && storyService.exists(story.getStoryId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("L'id {} existe déjà. Elle ne peut être créée", story.getStoryId()).getMessage());
+        if (storyDto.getStoryId() != null && storyService.exists(storyDto.getStoryId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format("L'id {} existe déjà. Elle ne peut être créée", storyDto.getStoryId()).getMessage());
         }
-        return ResponseEntity.ok(storyService.createOrUpdate(story));
+        return ResponseEntity.ok(storyService.createOrUpdate(storyDto));
     }
 
     @PostMapping
     public @ResponseBody
-    ResponseEntity<Story> updateStory(@RequestBody Story story) {
+    ResponseEntity<StoryDTO> updateStory(@RequestBody StoryDTO storyDto) {
         //TODO: déplacer les controles dans le service ?
-        Assert.notNull(story.getAuthorId(), () -> {
+        Assert.notNull(storyDto.getAuthorId(), () -> {
             throw new StoryInternalErrorException("L'auteur de l'histoire passée en paramètre ne peut pas être null");
         });
-        Assert.notNull(story.getFirstPageId(), () -> {
+        Assert.notNull(storyDto.getFirstPageId(), () -> {
             throw new StoryInternalErrorException("La première page de l'histoire passée en paramètre ne peut pas être null");
         });
-        Assert.notNull(story.getStoryId(), () -> {
+        Assert.notNull(storyDto.getStoryId(), () -> {
             throw new StoryInternalErrorException("L'identifiant de l'histoire passée en paramètre ne peut pas être null");
         });
-        if (personService.notExists(story.getAuthorId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La personne avec l'id {} n'existe pas", story.getAuthorId()).getMessage());
+        if (personService.notExists(storyDto.getAuthorId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, storyDto.getAuthorId()).getMessage());
         }
-        if (pageService.notExists(story.getFirstPageId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("La page avec l'id {} n'existe pas", story.getFirstPageId()).getMessage());
+        if (pageService.notExists(storyDto.getFirstPageId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, storyDto.getFirstPageId()).getMessage());
         }
-        if (storyService.notExists(story.getStoryId())) {
-            throw new StoryInternalErrorException(MessageFormatter.format("L'id {} n'existe pas", story.getStoryId()).getMessage());
+        if (storyService.notExists(storyDto.getStoryId())) {
+            throw new StoryInternalErrorException(MessageFormatter.format("L'id {} n'existe pas", storyDto.getStoryId()).getMessage());
         }
-        return ResponseEntity.ok(storyService.createOrUpdate(story));
+        return ResponseEntity.ok(storyService.createOrUpdate(storyDto));
     }
 
     @DeleteMapping(value = "/{storyId}")
