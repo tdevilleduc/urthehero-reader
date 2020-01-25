@@ -1,13 +1,12 @@
 package com.tdevilleduc.urthehero.core.model.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
-@Builder
 public class StoryDTO {
 
     private Integer storyId;
