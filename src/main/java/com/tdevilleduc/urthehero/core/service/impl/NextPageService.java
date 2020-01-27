@@ -6,7 +6,6 @@ import com.tdevilleduc.urthehero.core.model.NextPage;
 import com.tdevilleduc.urthehero.core.service.INextPageService;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +15,13 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR
 @Service
 public class NextPageService implements INextPageService {
 
-    @Autowired
-    IPageService pageService;
-    @Autowired
-    NextPageDao nextPageDao;
+    private IPageService pageService;
+    private NextPageDao nextPageDao;
+
+    public NextPageService(IPageService pageService, NextPageDao nextPageDao) {
+        this.pageService = pageService;
+        this.nextPageDao = nextPageDao;
+    }
 
     public List<NextPage> findByPageId(Integer pageId) {
         if (pageService.notExists(pageId)) {

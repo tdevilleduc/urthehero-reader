@@ -12,7 +12,6 @@ import com.tdevilleduc.urthehero.core.service.IProgressionService;
 import com.tdevilleduc.urthehero.core.service.IStoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -25,14 +24,17 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.*;
 @Service
 public class ProgressionService implements IProgressionService {
 
-    @Autowired
-    IStoryService storyService;
-    @Autowired
-    IPersonService personService;
-    @Autowired
-    IPageService pageService;
-    @Autowired
-    ProgressionDao progressionDao;
+    private IStoryService storyService;
+    private IPersonService personService;
+    private IPageService pageService;
+    private ProgressionDao progressionDao;
+
+    public ProgressionService(IStoryService storyService, IPersonService personService, IPageService pageService, ProgressionDao progressionDao) {
+        this.storyService = storyService;
+        this.personService = personService;
+        this.pageService = pageService;
+        this.progressionDao = progressionDao;
+    }
 
     public Progression doProgressionAction(final Integer personId, final Integer storyId, final Integer pageId) {
         Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);

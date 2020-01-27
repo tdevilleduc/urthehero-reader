@@ -8,7 +8,6 @@ import com.tdevilleduc.urthehero.core.model.dto.StoryDTO;
 import com.tdevilleduc.urthehero.core.service.IStoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -25,11 +24,11 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR
 public class StoryService implements IStoryService {
 
     private StoryDao storyDao;
-    @Autowired
-    StoryConvertor storyConvertor;
+    private StoryConvertor storyConvertor;
 
-    public StoryService(StoryDao storyDao) {
+    public StoryService(StoryDao storyDao, StoryConvertor storyConvertor) {
         this.storyDao = storyDao;
+        this.storyConvertor = storyConvertor;
     }
 
     public boolean exists(final Integer storyId) {

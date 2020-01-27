@@ -16,7 +16,6 @@ public class Story {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Integer storyId;
     @NonNull
     private String title;

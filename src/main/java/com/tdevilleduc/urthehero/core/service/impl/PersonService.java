@@ -8,7 +8,6 @@ import com.tdevilleduc.urthehero.core.model.dto.PersonDTO;
 import com.tdevilleduc.urthehero.core.service.IPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -22,10 +21,13 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR
 @Service
 public class PersonService implements IPersonService {
 
-    @Autowired
-    PersonDao personDao;
-    @Autowired
-    PersonConvertor personConvertor;
+    private PersonDao personDao;
+    private PersonConvertor personConvertor;
+
+    public PersonService(PersonDao personDao, PersonConvertor personConvertor) {
+        this.personDao = personDao;
+        this.personConvertor = personConvertor;
+    }
 
     public boolean exists(final Integer personId) {
         Optional<Person> person = personDao.findById(personId);
