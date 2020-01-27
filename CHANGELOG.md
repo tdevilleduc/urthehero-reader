@@ -14,3 +14,4 @@
 ### Changed
 
 - Upgrade to Quarkus 1.2.0.Final
+- Upgrade to TestContainers 1.12.5
