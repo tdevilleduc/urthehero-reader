@@ -8,6 +8,7 @@ import com.tdevilleduc.urthehero.core.service.IPersonService;
 import com.tdevilleduc.urthehero.core.service.IStoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +26,12 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR
 @RequestMapping("/api/story")
 public class StoryController {
 
-    private final IStoryService storyService;
-    private final IPersonService personService;
-    private final IPageService pageService;
-
-    public StoryController(IStoryService storyService, IPersonService personService, IPageService pageService) {
-        this.storyService = storyService;
-        this.personService = personService;
-        this.pageService = pageService;
-    }
-
+    @Autowired
+    IStoryService storyService;
+    @Autowired
+    IPersonService personService;
+    @Autowired
+    IPageService pageService;
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

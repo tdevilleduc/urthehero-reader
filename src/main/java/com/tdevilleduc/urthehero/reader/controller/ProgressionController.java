@@ -5,6 +5,7 @@ import com.tdevilleduc.urthehero.core.service.IPersonService;
 import com.tdevilleduc.urthehero.core.service.IProgressionService;
 import com.tdevilleduc.urthehero.core.service.IStoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,12 @@ import java.util.Optional;
 @RequestMapping("/api/progression")
 public class ProgressionController {
 
-    private final IProgressionService progressionService;
-    private final IStoryService storyService;
-    private final IPersonService personService;
-
-    public ProgressionController(IProgressionService progressionService, IStoryService storyService, IPersonService personService) {
-        this.progressionService = progressionService;
-        this.storyService = storyService;
-        this.personService = personService;
-    }
+    @Autowired
+    IProgressionService progressionService;
+    @Autowired
+    IStoryService storyService;
+    @Autowired
+    IPersonService personService;
 
     @GetMapping(value="/person/{personId}/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

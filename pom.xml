@@ -114,6 +114,19 @@
                       <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                   </systemProperties>
               </configuration>
+              <executions>
+                  <execution>
+                      <id>integration-tests</id>
+                      <phase>integration-test</phase>
+                      <goals>
+                          <goal>test</goal>
+                      </goals>
+                      <configuration>
+                          <excludedGroups>!integration</excludedGroups>
+                          <groups>integration</groups>
+                      </configuration>
+                  </execution>
+              </executions>
           </plugin>
           <plugin>
               <groupId>org.jboss.jandex</groupId>
@@ -144,6 +157,7 @@
               <version>${jacoco.maven.plugin.version}</version>
               <executions>
                   <execution>
+                      <id>default-prepare-agent</id>
                       <goals>
                           <goal>prepare-agent</goal>
                       </goals>
@@ -155,27 +169,27 @@
                           <goal>report</goal>
                       </goals>
                   </execution>
-                  <execution>
-                      <id>jacoco-check</id>
-                      <goals>
-                          <goal>check</goal>
-                      </goals>
-                      <configuration>
-                          <rules>
-                              <rule>
-                                  <element>PACKAGE</element>
-                                  <limits>
-                                      <limit>
-                                          <counter>LINE</counter>
-                                          <value>COVEREDRATIO</value>
-                                          <!-- TODO: on a next version, change this value -->
-                                          <minimum>0.00</minimum>
-                                      </limit>
-                                  </limits>
-                              </rule>
-                          </rules>
-                      </configuration>
-                  </execution>
+<!--                  <execution>-->
+<!--                      <id>jacoco-check</id>-->
+<!--                      <goals>-->
+<!--                          <goal>check</goal>-->
+<!--                      </goals>-->
+<!--                      <configuration>-->
+<!--                          <rules>-->
+<!--                              <rule>-->
+<!--                                  <element>PACKAGE</element>-->
+<!--                                  <limits>-->
+<!--                                      <limit>-->
+<!--                                          <counter>LINE</counter>-->
+<!--                                          <value>COVEREDRATIO</value>-->
+<!--                                          &lt;!&ndash; TODO: on a next version, change this value &ndash;&gt;-->
+<!--                                          <minimum>0.00</minimum>-->
+<!--                                      </limit>-->
+<!--                                  </limits>-->
+<!--                              </rule>-->
+<!--                          </rules>-->
+<!--                      </configuration>-->
+<!--                  </execution>-->
               </executions>
           </plugin>
       </plugins>

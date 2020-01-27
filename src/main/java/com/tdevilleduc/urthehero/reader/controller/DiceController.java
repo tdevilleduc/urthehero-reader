@@ -4,6 +4,7 @@ import com.tdevilleduc.urthehero.core.model.Dice;
 import com.tdevilleduc.urthehero.core.model.DiceValue;
 import com.tdevilleduc.urthehero.core.service.IDiceService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,8 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK
 @RequestMapping("/api/dice")
 public class DiceController {
 
-    private final IDiceService diceService;
-
-    public DiceController(IDiceService diceService) {
-        this.diceService = diceService;
-    }
+    @Autowired
+    IDiceService diceService;
 
     @GetMapping(value = "/roll/{dice}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

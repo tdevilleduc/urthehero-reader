@@ -6,6 +6,7 @@ import com.tdevilleduc.urthehero.core.model.dto.PersonDTO;
 import com.tdevilleduc.urthehero.core.service.IPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,8 @@ import java.util.Optional;
 @RequestMapping("/api/person")
 public class PersonController {
 
-    private final IPersonService personService;
-
-    public PersonController(IPersonService personService) {
-        this.personService = personService;
-    }
+    @Autowired
+    IPersonService personService;
 
     @GetMapping(value="/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

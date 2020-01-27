@@ -6,6 +6,7 @@ import com.tdevilleduc.urthehero.core.model.dto.PageDTO;
 import com.tdevilleduc.urthehero.core.service.IPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,8 @@ import java.util.Optional;
 @RequestMapping("/api/page")
 public class PageController {
 
-    private final IPageService pageService;
-
-    public PageController(IPageService pageService) {
-        this.pageService = pageService;
-    }
+    @Autowired
+    IPageService pageService;
 
     @GetMapping(value = "/{pageId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
