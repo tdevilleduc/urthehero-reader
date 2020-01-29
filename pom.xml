@@ -6,13 +6,13 @@
   <artifactId>urthehero-reader</artifactId>
   <version>1.0-SNAPSHOT</version>
   <properties>
-      <surefire-plugin.version>2.22.2</surefire-plugin.version>
       <maven.compiler.target>11</maven.compiler.target>
       <maven.compiler.source>11</maven.compiler.source>
       <quarkus.version>1.2.0.Final</quarkus.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <lombok.version>1.18.10</lombok.version>
+      <surefire-plugin.version>2.22.2</surefire-plugin.version>
       <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
       <testcontainers.version>1.12.5</testcontainers.version>
       <modelmapper.version>2.3.6</modelmapper.version>
@@ -39,6 +39,11 @@
       </dependencies>
   </dependencyManagement>
       <dependencies>
+          <dependency>
+              <groupId>com.tdevilleduc.urthehero</groupId>
+              <artifactId>core</artifactId>
+              <version>1.0-SNAPSHOT</version>
+          </dependency>
           <dependency>
               <groupId>io.quarkus</groupId>
               <artifactId>quarkus-spring-data-jpa</artifactId>
