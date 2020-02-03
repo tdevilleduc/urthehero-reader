@@ -41,7 +41,7 @@
       <dependencies>
           <dependency>
               <groupId>com.tdevilleduc.urthehero</groupId>
-              <artifactId>core</artifactId>
+              <artifactId>urthehero-core</artifactId>
               <version>1.0-SNAPSHOT</version>
           </dependency>
           <dependency>

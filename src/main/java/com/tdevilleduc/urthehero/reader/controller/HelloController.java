@@ -26,4 +26,12 @@ public class HelloController {
         Assert.notNull(name, CHECK_NAME_PARAMETER_MANDATORY);
         return ResponseEntity.ok(helloService.hello(name));
     }
+
+    @GetMapping(value = "/polite/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<String> politeHello(@PathVariable(name = "name") String name) {
+        Assert.notNull(name, CHECK_NAME_PARAMETER_MANDATORY);
+        return ResponseEntity.ok(helloService.politeHello(name));
+    }
 }
