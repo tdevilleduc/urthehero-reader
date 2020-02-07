@@ -11,6 +11,8 @@
       <quarkus.version>1.2.0.Final</quarkus.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+      <myMavenRepoReadUrl>https://mymavenrepo.com/repo/4uyg2fZ6ssEfmKDhAAfG/</myMavenRepoReadUrl>
+
       <lombok.version>1.18.10</lombok.version>
       <surefire-plugin.version>2.22.2</surefire-plugin.version>
       <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -246,4 +248,21 @@
           </build>
       </profile>
   </profiles>
+
+    <repositories>
+        <repository>
+            <id>myMavenRepoRead</id>
+            <url>${myMavenRepoReadUrl}</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>myMavenRepoWrite</id>
+            <url>${myMavenRepoWriteUrl}</url>
+        </repository>
+        <snapshotRepository>
+            <id>myMavenRepoWrite</id>
+            <url>${myMavenRepoWriteUrl}</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
