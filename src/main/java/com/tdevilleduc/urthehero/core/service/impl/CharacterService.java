@@ -40,7 +40,7 @@ public class CharacterService implements ICharacterService {
         Character character = characterDao.findByPersonIdAndStoryId(personId, storyId);
         Integer currentLifePoints = character.getLifePoints();
 
-        log.info(MessageFormatter.format(INFO_MESSAGE_CHARACTER_LIFE, personId).getMessage());
+        log.info(MessageFormatter.format(INFO_MESSAGE_CHARACTER_LIFE, currentLifePoints).getMessage());
 
         if (currentLifePoints - changeLife <= 0) {
             throw new YouAreDeadException();
@@ -51,5 +51,17 @@ public class CharacterService implements ICharacterService {
 
         return character;
     }
+
+    public Character changePage(Integer personId, Integer storyId, Integer newPageId) {
+        Character character = characterDao.findByPersonIdAndStoryId(personId, storyId);
+
+        log.info(MessageFormatter.format(INFO_MESSAGE_CHARACTER_CURRENT_PAGE, newPageId).getMessage());
+
+        character.setPageId(newPageId);
+        character = characterDao.save(character);
+
+        return character;
+    }
+
 
 }

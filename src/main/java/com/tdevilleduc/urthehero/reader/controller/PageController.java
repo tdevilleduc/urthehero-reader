@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -29,10 +28,7 @@ public class PageController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Page> getPageById(@PathVariable(name = "pageId") Integer pageId) {
-        Optional<Page> optional = pageService.findById(pageId);
-        return optional
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(pageService.findById(pageId));
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)

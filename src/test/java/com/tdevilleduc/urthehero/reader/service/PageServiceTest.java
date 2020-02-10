@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 @QuarkusTest
 public class PageServiceTest extends AbstractTest {
@@ -55,10 +54,7 @@ public class PageServiceTest extends AbstractTest {
 
     @Test
     public void findById_thenSuccess() {
-        Optional<Page> optionalPage = pageService.findById(pageId_exists);
-        Assertions.assertNotNull(optionalPage);
-        Assertions.assertTrue(optionalPage.isPresent());
-        Page page = optionalPage.get();
+        Page page = pageService.findById(pageId_exists);
         Assertions.assertNotNull(page);
         Assertions.assertEquals("Ulysse", page.getText());
         Assertions.assertEquals("image3", page.getImage());

@@ -11,6 +11,7 @@ public final class ApplicationConstants {
     public static final String ERROR_MESSAGE_STORY_DOESNOT_EXIST = "L'histoire avec l'id {} n'existe pas";
 
     public static final String INFO_MESSAGE_CHARACTER_LIFE = "Le personnage possede {} points de vie";
+    public static final String INFO_MESSAGE_CHARACTER_CURRENT_PAGE = "Le personnage arrive sur la page {}";
 
     private ApplicationConstants() {}
 }

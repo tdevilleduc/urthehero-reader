@@ -43,9 +43,14 @@ public class PageService implements IPageService {
         return ! exists(pageId);
     }
 
-    public Optional<Page> findById(final Integer pageId) {
+    public Page findById(final Integer pageId) {
         Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
-        return pageDao.findById(pageId);
+        return pageDao.findById(pageId)
+                .orElseThrow(
+                        () -> {
+                            throw new PageNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId).getMessage());
+                        }
+                );
     }
 
     public List<Page> findAll() {
@@ -59,12 +64,6 @@ public class PageService implements IPageService {
 
     public void delete(Integer pageId) {
         Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
-        Optional<Page> optional = findById(pageId);
-        optional
-                .ifPresentOrElse(page -> pageDao.delete(page),
-                        () -> {
-                            throw new PageNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId).getMessage());
-                        }
-                );
+        pageDao.delete(findById(pageId));
     }
 }
