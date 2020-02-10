@@ -31,7 +31,7 @@ public class PersonService implements IPersonService {
 
     public boolean exists(final Integer personId) {
         Optional<Person> person = personDao.findById(personId);
-        if (person.isEmpty()) {
+        if (!person.isPresent()) {
             log.error(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId);
             return false;
         }
@@ -59,11 +59,10 @@ public class PersonService implements IPersonService {
     public void delete(Integer personId) {
         Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);
         Optional<Person> optional = findById(personId);
-        optional
-            .ifPresentOrElse(person -> personDao.delete(person),
-                () -> {
-                    throw new PersonNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId).getMessage());
-                }
-        );
+        if (optional.isPresent()) {
+            personDao.delete(optional.get());
+        } else {
+            throw new PersonNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId).getMessage());
+        }
     }
 }

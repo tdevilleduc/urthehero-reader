@@ -32,7 +32,7 @@ public class PageService implements IPageService {
     public boolean exists(final Integer pageId) {
         Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
         Optional<Page> page = pageDao.findById(pageId);
-        if (page.isEmpty()) {
+        if (!page.isPresent()) {
             log.error(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId);
             return false;
         }
@@ -45,12 +45,11 @@ public class PageService implements IPageService {
 
     public Page findById(final Integer pageId) {
         Assert.notNull(pageId, CHECK_PAGEID_PARAMETER_MANDATORY);
-        return pageDao.findById(pageId)
-                .orElseThrow(
-                        () -> {
-                            throw new PageNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId).getMessage());
-                        }
-                );
+        Optional<Page> optionalPage = pageDao.findById(pageId);
+        if (!optionalPage.isPresent()) {
+            throw new PageNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PAGE_DOESNOT_EXIST, pageId).getMessage());
+        }
+        return optionalPage.get();
     }
 
     public List<Page> findAll() {

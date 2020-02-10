@@ -2,6 +2,7 @@ package com.tdevilleduc.urthehero.core.service.impl;
 
 import com.tdevilleduc.urthehero.core.convertor.StoryConvertor;
 import com.tdevilleduc.urthehero.core.dao.StoryDao;
+import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.StoryNotFoundException;
 import com.tdevilleduc.urthehero.core.model.Story;
 import com.tdevilleduc.urthehero.core.model.dto.StoryDTO;
@@ -15,8 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_STORYID_PARAMETER_MANDATORY;
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_STORY_DOESNOT_EXIST;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.*;
 
 
 @Slf4j
@@ -34,7 +34,7 @@ public class StoryService implements IStoryService {
     public boolean exists(final Integer storyId) {
         Assert.notNull(storyId, "The story parameter is mandatory !");
         Optional<Story> story = storyDao.findById(storyId);
-        if (story.isEmpty()) {
+        if (!story.isPresent()) {
             log.error(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId);
             return false;
         }
@@ -63,11 +63,10 @@ public class StoryService implements IStoryService {
     public void delete(Integer storyId) {
         Assert.notNull(storyId, CHECK_STORYID_PARAMETER_MANDATORY);
         Optional<Story> optional = findById(storyId);
-        optional
-            .ifPresentOrElse(story -> storyDao.delete(story),
-                () -> {
-                    throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
-                }
-        );
+        if (optional.isPresent()) {
+            storyDao.delete(optional.get());
+        } else {
+            throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
+        }
     }
 }
