@@ -13,9 +13,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.INFO_MESSAGE_CHARACTER_LIFE;
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_PERSONID_PARAMETER_MANDATORY;
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PERSON_DOESNOT_EXIST;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.*;
 
 @Slf4j
 @Service
@@ -24,13 +22,18 @@ public class CharacterService implements ICharacterService {
     private PersonService personService;
     private CharacterDao characterDao;
 
+    public CharacterService(PersonService personService, CharacterDao characterDao) {
+        this.personService = personService;
+        this.characterDao = characterDao;
+    }
+
     public List<Integer> findStoryByPersonId(final Integer personId) {
         Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);
         if (personService.notExists(personId)) {
             throw new PersonNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId).getMessage());
         }
 
-        return characterDao.findByPersonId(personId).stream().map(character -> character.getStoryId()).collect(Collectors.toList());
+        return characterDao.findByPersonId(personId).stream().map(Character::getStoryId).collect(Collectors.toList());
     }
 
     public Character updateLife(Integer personId, Integer storyId, Integer changeLife) {
