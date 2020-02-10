@@ -60,10 +60,11 @@ public class ProgressionController {
     }
 
     @PostMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<Progression> postProgressionAction(@PathVariable Integer personId,
-                                                      @PathVariable Integer storyId,
-                                                      @PathVariable Integer newPageId) {
+    ResponseEntity<Progression> postProgressionAction(@PathVariable(name = "personId") Integer personId,
+                                                      @PathVariable(name = "storyId") Integer storyId,
+                                                      @PathVariable(name = "newPageId") Integer newPageId) {
         return ResponseEntity.ok(progressionService.doProgressionAction(personId, storyId, newPageId));
     }
 
