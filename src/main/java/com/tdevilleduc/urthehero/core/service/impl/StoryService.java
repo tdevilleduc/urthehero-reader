@@ -45,9 +45,14 @@ public class StoryService implements IStoryService {
         return ! exists(storyId);
     }
 
-    public Optional<Story> findById(final Integer storyId) {
+    public Story findById(final Integer storyId) {
         Assert.notNull(storyId, CHECK_STORYID_PARAMETER_MANDATORY);
-        return storyDao.findById(storyId);
+        Optional<Story> optionalStory = storyDao.findById(storyId);
+        if (optionalStory.isPresent()) {
+            return optionalStory.get();
+        } else {
+            throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
+        }
     }
 
     public List<Story> findAll() {
@@ -62,11 +67,7 @@ public class StoryService implements IStoryService {
 
     public void delete(Integer storyId) {
         Assert.notNull(storyId, CHECK_STORYID_PARAMETER_MANDATORY);
-        Optional<Story> optional = findById(storyId);
-        if (optional.isPresent()) {
-            storyDao.delete(optional.get());
-        } else {
-            throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
-        }
+        Story story = findById(storyId);
+        storyDao.delete(story);
     }
 }

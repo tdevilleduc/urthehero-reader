@@ -2,6 +2,7 @@ package com.tdevilleduc.urthehero.core.service.impl;
 
 import com.tdevilleduc.urthehero.core.dao.CharacterDao;
 import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
+import com.tdevilleduc.urthehero.core.exceptions.StoryNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.YouAreDeadException;
 import com.tdevilleduc.urthehero.core.model.Character;
 import com.tdevilleduc.urthehero.core.service.ICharacterService;
@@ -20,10 +21,12 @@ import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.*;
 public class CharacterService implements ICharacterService {
 
     private PersonService personService;
+    private StoryService storyService;
     private CharacterDao characterDao;
 
-    public CharacterService(PersonService personService, CharacterDao characterDao) {
+    public CharacterService(PersonService personService, StoryService storyService, CharacterDao characterDao) {
         this.personService = personService;
+        this.storyService = storyService;
         this.characterDao = characterDao;
     }
 
@@ -61,6 +64,19 @@ public class CharacterService implements ICharacterService {
         character = characterDao.save(character);
 
         return character;
+    }
+
+    public Integer findCurrentPageByPersonIdAndStoryId(final Integer personId, final Integer storyId) {
+        Assert.notNull(personId, CHECK_PERSONID_PARAMETER_MANDATORY);
+        Assert.notNull(storyId, CHECK_STORYID_PARAMETER_MANDATORY);
+        if (personService.notExists(personId)) {
+            throw new PersonNotFoundException(MessageFormatter.format(ERROR_MESSAGE_PERSON_DOESNOT_EXIST, personId).getMessage());
+        }
+        if (storyService.notExists(storyId)) {
+            throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
+        }
+
+        return characterDao.findByPersonIdAndStoryId(personId, storyId).getPageId();
     }
 
 

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 @QuarkusTest
 public class StoryServiceTest extends AbstractTest {
@@ -55,10 +54,7 @@ public class StoryServiceTest extends AbstractTest {
 
     @Test
     public void findById_thenSuccess() {
-        Optional<Story> optionalStory = storyService.findById(storyId_exists);
-        Assertions.assertNotNull(optionalStory);
-        Assertions.assertTrue(optionalStory.isPresent());
-        Story story = optionalStory.get();
+        Story story = storyService.findById(storyId_exists);
         Assertions.assertNotNull(story);
         Assertions.assertEquals(1, story.getAuthorId());
         Assertions.assertEquals(1, story.getFirstPageId());

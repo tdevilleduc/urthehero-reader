@@ -16,7 +16,6 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PAGE_DOESNOT_EXIST;
 import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_PERSON_DOESNOT_EXIST;
@@ -44,10 +43,7 @@ public class StoryController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Story> getStoryById(@PathVariable(name = "storyId") Integer storyId) {
-        Optional<Story> optional = this.storyService.findById(storyId);
-        return optional
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(storyService.findById(storyId));
     }
 
     @PutMapping
