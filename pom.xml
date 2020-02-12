@@ -18,7 +18,6 @@
       <surefire-plugin.version>2.22.2</surefire-plugin.version>
       <compiler-plugin.version>3.8.1</compiler-plugin.version>
       <testcontainers.version>1.12.5</testcontainers.version>
-      <modelmapper.version>2.3.6</modelmapper.version>
       <apache-commons-math3.version>3.6.1</apache-commons-math3.version>
       <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
 
