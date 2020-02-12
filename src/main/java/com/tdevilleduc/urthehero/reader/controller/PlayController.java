@@ -22,8 +22,7 @@ public class PlayController {
     @Autowired
     ICharacterService characterService;
 
-
-    @PostMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")
+    @GetMapping(value="/person/{personId}/story/{storyId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Page> beginStory(@PathVariable(name = "personId") Integer personId,
@@ -33,7 +32,7 @@ public class PlayController {
         return ResponseEntity.ok(pageService.findById(story.getFirstPageId()));
     }
 
-    @PostMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")
+    @GetMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Page> postProgressionAction(@PathVariable(name = "personId") Integer personId,
@@ -44,7 +43,7 @@ public class PlayController {
         return ResponseEntity.ok(pageService.findById(newPageId));
     }
 
-    @PostMapping(value="/person/{personId}/story/{storyId}/page/{newPageId}")
+    @GetMapping(value="/resume/person/{personId}/story/{storyId}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Page> resumeStory(@PathVariable(name = "personId") Integer personId,

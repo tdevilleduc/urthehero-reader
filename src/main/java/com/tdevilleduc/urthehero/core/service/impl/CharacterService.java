@@ -1,6 +1,7 @@
 package com.tdevilleduc.urthehero.core.service.impl;
 
 import com.tdevilleduc.urthehero.core.dao.CharacterDao;
+import com.tdevilleduc.urthehero.core.exceptions.CharacterNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.StoryNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.YouAreDeadException;
@@ -57,6 +58,9 @@ public class CharacterService implements ICharacterService {
 
     public Character changePage(Integer personId, Integer storyId, Integer newPageId) {
         Character character = characterDao.findByPersonIdAndStoryId(personId, storyId);
+        if (character == null) {
+            throw new CharacterNotFoundException(MessageFormatter.format(ERROR_MESSAGE_CHARACTER_DOESNOT_EXIST, personId, storyId).getMessage());
+        }
 
         log.info(MessageFormatter.format(INFO_MESSAGE_CHARACTER_CURRENT_PAGE, newPageId).getMessage());
 
@@ -75,8 +79,12 @@ public class CharacterService implements ICharacterService {
         if (storyService.notExists(storyId)) {
             throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
         }
-
-        return characterDao.findByPersonIdAndStoryId(personId, storyId).getPageId();
+        Character character = characterDao.findByPersonIdAndStoryId(personId, storyId);
+        if (character == null) {
+            throw new CharacterNotFoundException(MessageFormatter.format(ERROR_MESSAGE_CHARACTER_DOESNOT_EXIST, personId, storyId).getMessage());
+        }
+        
+        return character.getPageId();
     }
 
 
