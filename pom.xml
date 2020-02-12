@@ -6,16 +6,17 @@
   <artifactId>urthehero-reader</artifactId>
   <version>1.0-SNAPSHOT</version>
   <properties>
-      <maven.compiler.target>11</maven.compiler.target>
-      <maven.compiler.source>11</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <maven.compiler.source>1.8</maven.compiler.source>
       <quarkus.version>1.2.0.Final</quarkus.version>
+      <quarkus-plugin.version>1.2.0.Final</quarkus-plugin.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <myMavenRepoReadUrl>https://mymavenrepo.com/repo/4uyg2fZ6ssEfmKDhAAfG/</myMavenRepoReadUrl>
 
       <lombok.version>1.18.10</lombok.version>
       <surefire-plugin.version>2.22.2</surefire-plugin.version>
-      <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+      <compiler-plugin.version>3.8.1</compiler-plugin.version>
       <testcontainers.version>1.12.5</testcontainers.version>
       <modelmapper.version>2.3.6</modelmapper.version>
       <apache-commons-math3.version>3.6.1</apache-commons-math3.version>
@@ -83,166 +84,74 @@
               <scope>test</scope>
           </dependency>
           <dependency>
-              <groupId>org.modelmapper</groupId>
-              <artifactId>modelmapper</artifactId>
-              <version>${modelmapper.version}</version>
-          </dependency>
-          <dependency>
               <groupId>org.apache.commons</groupId>
               <artifactId>commons-math3</artifactId>
               <version>${apache-commons-math3.version}</version>
           </dependency>
       </dependencies>
-  <build>
-      <plugins>
-          <plugin>
-              <groupId>io.quarkus</groupId>
-              <artifactId>quarkus-maven-plugin</artifactId>
-              <version>${quarkus.version}</version>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>build</goal>
-                      </goals>
-                  </execution>
-              </executions>
-          </plugin>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <version>${surefire-plugin.version}</version>
-              <configuration>
-                  <systemProperties>
-                      <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                  </systemProperties>
-              </configuration>
-              <executions>
-                  <execution>
-                      <id>integration-tests</id>
-                      <phase>integration-test</phase>
-                      <goals>
-                          <goal>test</goal>
-                      </goals>
-                      <configuration>
-                          <excludedGroups>!integration</excludedGroups>
-                          <groups>integration</groups>
-                      </configuration>
-                  </execution>
-              </executions>
-          </plugin>
-          <plugin>
-              <groupId>org.jboss.jandex</groupId>
-              <artifactId>jandex-maven-plugin</artifactId>
-              <version>1.0.7</version>
-              <executions>
-                  <execution>
-                      <id>make-index</id>
-                      <goals>
-                          <goal>jandex</goal>
-                      </goals>
-                  </execution>
-              </executions>
-          </plugin>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>${maven-compiler-plugin.version}</version>
-              <configuration>
-                  <source>${maven.compiler.source}</source>
-                  <target>${maven.compiler.target}</target>
-              </configuration>
-          </plugin>
-
-          <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>${jacoco.maven.plugin.version}</version>
-              <executions>
-                  <execution>
-                      <id>default-prepare-agent</id>
-                      <goals>
-                          <goal>prepare-agent</goal>
-                      </goals>
-                  </execution>
-                  <execution>
-                      <id>report</id>
-                      <phase>prepare-package</phase>
-                      <goals>
-                          <goal>report</goal>
-                      </goals>
-                  </execution>
-<!--                  <execution>-->
-<!--                      <id>jacoco-check</id>-->
-<!--                      <goals>-->
-<!--                          <goal>check</goal>-->
-<!--                      </goals>-->
-<!--                      <configuration>-->
-<!--                          <rules>-->
-<!--                              <rule>-->
-<!--                                  <element>PACKAGE</element>-->
-<!--                                  <limits>-->
-<!--                                      <limit>-->
-<!--                                          <counter>LINE</counter>-->
-<!--                                          <value>COVEREDRATIO</value>-->
-<!--                                          &lt;!&ndash; TODO: on a next version, change this value &ndash;&gt;-->
-<!--                                          <minimum>0.00</minimum>-->
-<!--                                      </limit>-->
-<!--                                  </limits>-->
-<!--                              </rule>-->
-<!--                          </rules>-->
-<!--                      </configuration>-->
-<!--                  </execution>-->
-              </executions>
-          </plugin>
-      </plugins>
-  </build>
-  <profiles>
-      <profile>
-          <id>native</id>
-          <activation>
-              <property>
-                  <name>native</name>
-              </property>
-          </activation>
-          <build>
-              <plugins>
-                  <plugin>
-                      <groupId>io.quarkus</groupId>
-                      <artifactId>quarkus-maven-plugin</artifactId>
-                      <version>${quarkus.version}</version>
-                      <executions>
-                          <execution>
-                              <goals>
-                                  <goal>native-image</goal>
-                              </goals>
-                              <configuration>
-                                  <enableHttpUrlHandler>true</enableHttpUrlHandler>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-failsafe-plugin</artifactId>
-                      <version>${surefire-plugin.version}</version>
-                      <executions>
-                          <execution>
-                              <goals>
-                                  <goal>integration-test</goal>
-                                  <goal>verify</goal>
-                              </goals>
-                              <configuration>
-                                  <systemProperties>
-                                      <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                                  </systemProperties>
-                              </configuration>
-                          </execution>
-                      </executions>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
-  </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+                <configuration>
+                    <systemProperties>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <configuration>
+                                    <systemProperties>
+                                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                                    </systemProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <quarkus.package.type>native</quarkus.package.type>
+            </properties>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>

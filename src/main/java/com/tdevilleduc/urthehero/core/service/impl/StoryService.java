@@ -34,7 +34,7 @@ public class StoryService implements IStoryService {
     public boolean exists(final Integer storyId) {
         Assert.notNull(storyId, "The story parameter is mandatory !");
         Optional<Story> story = storyDao.findById(storyId);
-        if (story.isEmpty()) {
+        if (!story.isPresent()) {
             log.error(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId);
             return false;
         }
@@ -63,11 +63,10 @@ public class StoryService implements IStoryService {
     public void delete(Integer storyId) {
         Assert.notNull(storyId, CHECK_STORYID_PARAMETER_MANDATORY);
         Optional<Story> optional = findById(storyId);
-        optional
-            .ifPresentOrElse(story -> storyDao.delete(story),
-                () -> {
-                    throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
-                }
-        );
+        if (optional.isPresent()) {
+            storyDao.delete(optional.get());
+        } else {
+            throw new StoryNotFoundException(MessageFormatter.format(ERROR_MESSAGE_STORY_DOESNOT_EXIST, storyId).getMessage());
+        }
     }
 }
