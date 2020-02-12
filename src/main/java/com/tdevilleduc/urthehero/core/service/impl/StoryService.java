@@ -2,7 +2,6 @@ package com.tdevilleduc.urthehero.core.service.impl;
 
 import com.tdevilleduc.urthehero.core.convertor.StoryConvertor;
 import com.tdevilleduc.urthehero.core.dao.StoryDao;
-import com.tdevilleduc.urthehero.core.exceptions.PersonNotFoundException;
 import com.tdevilleduc.urthehero.core.exceptions.StoryNotFoundException;
 import com.tdevilleduc.urthehero.core.model.Story;
 import com.tdevilleduc.urthehero.core.model.dto.StoryDTO;
@@ -16,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.*;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.CHECK_STORYID_PARAMETER_MANDATORY;
+import static com.tdevilleduc.urthehero.core.constant.ApplicationConstants.ERROR_MESSAGE_STORY_DOESNOT_EXIST;
 
 
 @Slf4j
